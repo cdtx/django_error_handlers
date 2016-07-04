@@ -9,6 +9,7 @@ setup(
         'Programming Language :: Python :: 3.4',
     ],
     packages=['cdtx.django_error_handlers'],
+    package_data={'cdtx.django_error_handlers': ['templates/*', 'static/*',]},
     install_requires = []
 )
 
