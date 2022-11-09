@@ -1,36 +1,44 @@
 from django.template import RequestContext
 from django.shortcuts import render
 from django.http import *
-from django.contrib.staticfiles.templatetags.staticfiles import static
+from django.conf.urls.static import static
 
 uniqueTemplate = 'django_error_handlers/error_xxx.html'
 
 # Create your views here.
-def handler400(request):
-    context = RequestContext(request, {
-                            'error_number': '400',
-                            'image_path': static('images/bad_request_brian.jpg'),
-                        })
-    return HttpResponseBadRequest(render(request, uniqueTemplate, context_instance=context))
+def handler400(request, *args, **kwargs):
+    context = {
+        'error_number': '400',
+        'image_path': static('images/bad_request_brian.jpg'),
+    }
+    response = render(request, uniqueTemplate, context)
+    response.status_code = 400
+    return response
 
-def handler403(request):
-    context = RequestContext(request, {
-                            'error_number': '403',
-                            'image_path': static('images/less_privileges.jpg'),
-                        })
-    return HttpResponseForbidden(render(request, uniqueTemplate, context_instance=context))
+def handler403(request, *args, **kwargs):
+    context = {
+        'error_number': '403',
+        'image_path': static('images/less_privileges.jpg'),
+    }
+    response = render(request, uniqueTemplate, context)
+    response.status_code = 403
+    return response
 
-def handler404(request):
-    context = RequestContext(request, {
-                            'error_number': '404',
-                            'image_path': static('images/confused_travolta.gif'),
-                        })
-    return HttpResponseBadRequest(render(request, uniqueTemplate, context_instance=context))
+def handler404(request, *args, **kwargs):
+    context = {
+        'error_number': '404',
+        'image_path': static('images/confused_travolta.gif'),
+    }
+    response = render(request, uniqueTemplate, context)
+    response.status_code = 404
+    return response
 
-def handler500(request):
-    context = RequestContext(request, {
-                            'error_number': '500',
-                            'image_path': static('images/server_error.jpg'),
-                        })
-    return HttpResponseServerError(render(request, uniqueTemplate, context_instance=context))
+def handler500(request, *args, **kwargs):
+    context = {
+        'error_number': '500',
+        'image_path': static('images/server_error.jpg'),
+    }
+    response = render(request, uniqueTemplate, context)
+    response.status_code = 500
+    return response
 
